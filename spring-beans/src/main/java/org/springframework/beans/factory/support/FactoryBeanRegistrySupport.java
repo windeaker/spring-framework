@@ -135,7 +135,8 @@ public abstract class FactoryBeanRegistrySupport extends DefaultSingletonBeanReg
 			Object object = doGetObjectFromFactoryBean(factory, beanName);
 			if (shouldPostProcess) {
 				try {
-					object = postProcessObjectFromFactoryBean(object, beanName);
+					// 调用后置处理器
+					object = postProcessObjectFromFactoryBean(object, beanName);//@see AbstractAutowireCapableBeanFactory
 				}
 				catch (Throwable ex) {
 					throw new BeanCreationException(beanName, "Post-processing of FactoryBean's object failed", ex);
