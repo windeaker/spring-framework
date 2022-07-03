@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+		 version="2.5">
+
+	<display-name>windeaker-spring-mvc-test</display-name>
+
+	<!--	使用ContextLoaderListener配置时，配置spring配置文件的位置-->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:application.xml</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>myDataKey</param-name>
+		<param-value>myDataValue</param-value>
+	</context-param>
+
+<!--	spring mvc的前端控制器-->
+	<servlet>
+		<servlet-name>springmvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- contextConfigLocation不是必须的， 如果不配置contextConfigLocation， springmvc的配置文件默认在：WEB-INF/servlet的name+"-servlet.xml" -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:springmvc-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<url-pattern>/springmvc/*</url-pattern>
+	</servlet-mapping>
+
+<!--	自定义servlet-->
+	<servlet>
+		<servlet-name>myServlet</servlet-name>
+		<servlet-class>com.windeaker.mvc.MyServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>myServlet</servlet-name>
+		<url-pattern>/myServlet</url-pattern>
+	</servlet-mapping>
+
+
+
+<!--	配置上下文载入器-->
+<!--	上下文载入器载入出DispatchedServlet载入的配置文件在外的其他上下文的配置文件-->
+<!--	最常用的上下文载入器时一个Servlet监听器，其名称为ContextLoaderListener-->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>com.windeaker.mvc.MyServletContextListener</listener-class>
+	</listener>
+</web-app>

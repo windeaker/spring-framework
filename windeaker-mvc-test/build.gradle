@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'org.springframework'
+version '5.2.17.BUILD-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+//    testImplementation 'junit:junit:4.11'
+//    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+//    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    compile(project(":spring-webmvc"))
+    compile("javax.servlet:javax.servlet-api")
+    compile("javax.servlet.jsp:javax.servlet.jsp-api")
+    compile("javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api")
+    implementation 'jstl:jstl:1.2'
+
+}
+
+test {
+    useJUnitPlatform()
+}
