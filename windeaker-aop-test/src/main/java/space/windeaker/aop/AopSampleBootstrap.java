@@ -1,4 +1,4 @@
-package com.windeaker.core.aop;
+package space.windeaker.aop;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

@@ -1,4 +1,4 @@
-package com.windeaker.core.aop;
+package space.windeaker.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -24,7 +24,7 @@ public class SimpleAspect {
     }
 
     //
-    @Pointcut("within(com.windeaker.core.aop.SimpleService)")
+    @Pointcut("within(space.windeaker.aop.SimpleService)")
     public void matchMethod(){
     }
 

@@ -1,4 +1,4 @@
-package com.windeaker.core.aop;
+package space.windeaker.aop;
 
 import org.springframework.aop.framework.AopContext;
 import org.springframework.stereotype.Component;
