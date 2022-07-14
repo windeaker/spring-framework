@@ -608,17 +608,21 @@ public class JdbcTemplate extends JdbcAccessor implements JdbcOperations {
 			String sql = getSql(psc);
 			logger.debug("Executing prepared SQL statement" + (sql != null ? " [" + sql + "]" : ""));
 		}
-
+		// 获取数据库连接
 		Connection con = DataSourceUtils.getConnection(obtainDataSource());
 		PreparedStatement ps = null;
 		try {
 			ps = psc.createPreparedStatement(con);
+			// 应用statement的设定
 			applyStatementSettings(ps);
+			// 调用回调函数，实际调用jdbc操作数据库的地方
 			T result = action.doInPreparedStatement(ps);
+			// 处理一些警告信息，有些警告仅仅是因为数据错误而不影响程序执行，因此打印出来
 			handleWarnings(ps);
 			return result;
 		}
 		catch (SQLException ex) {
+			// 释放数据库连接避免当一场转换器没有被初始化的时候出现潜在的连接池死锁
 			// Release Connection early, to avoid potential connection pool deadlock
 			// in the case when the exception translator hasn't been initialized yet.
 			if (psc instanceof ParameterDisposer) {
