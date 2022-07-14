@@ -14,7 +14,7 @@ import java.util.List;
  * @author windeaker
  * @date 2022/7/2
  */
-public class UserListController extends AbstractController {
+public class UserListSimpleController extends AbstractController {
 
 	@Override
 	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {

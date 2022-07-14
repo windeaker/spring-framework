@@ -8,10 +8,4 @@
        https://www.springframework.org/schema/context/spring-context.xsd
 ">
 
-<!--	&lt;!&ndash;开启controller扫描&ndash;&gt;-->
-<!--	<context:component-scan base-package="com.windeaker.mvc"/>-->
-
-
-
-
 </beans>

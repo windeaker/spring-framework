@@ -18,23 +18,32 @@
 		<param-value>myDataValue</param-value>
 	</context-param>
 
-<!--	spring mvc的前端控制器-->
+	<!--	spring mvc的前端控制器-->
 	<servlet>
 		<servlet-name>springmvc</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<!-- contextConfigLocation不是必须的， 如果不配置contextConfigLocation， springmvc的配置文件默认在：WEB-INF/servlet的name+"-servlet.xml" -->
+		<!--		contextConfigLocation不是必须的， 如果不配置contextConfigLocation-->
+		<!--		springmvc的配置文件默认在：WEB-INF/servlet的name+"-servlet.xml"-->
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>classpath:springmvc-servlet.xml</param-value>
+		</init-param>
+		<!--		默认配置是查找所有的HandlerMapping，如果只需要指定的handlerMapping-->
+		<!--		如果此处设置为false，那么全局只有一个handlerMapping的bean，-->
+		<!--		如果没有配置该handlerMapping 就为null，将由兜底的handlerMapping代替-->
+		<init-param>
+			<param-name>detectAllHandlerMappings</param-name>
+			<param-value>true</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>springmvc</servlet-name>
+		<!--		必须url必须在/springmvc/**-->
 		<url-pattern>/springmvc/*</url-pattern>
 	</servlet-mapping>
 
-<!--	自定义servlet-->
+	<!--	自定义servlet-->
 	<servlet>
 		<servlet-name>myServlet</servlet-name>
 		<servlet-class>com.windeaker.mvc.MyServlet</servlet-class>
@@ -45,10 +54,9 @@
 	</servlet-mapping>
 
 
-
-<!--	配置上下文载入器-->
-<!--	上下文载入器载入出DispatchedServlet载入的配置文件在外的其他上下文的配置文件-->
-<!--	最常用的上下文载入器时一个Servlet监听器，其名称为ContextLoaderListener-->
+	<!--	配置上下文载入器-->
+	<!--	上下文载入器载入出DispatchedServlet载入的配置文件在外的其他上下文的配置文件-->
+	<!--	最常用的上下文载入器时一个Servlet监听器，其名称为ContextLoaderListener-->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>

@@ -500,9 +500,11 @@ public class DispatcherServlet extends FrameworkServlet {
 	 * <p>May be overridden in subclasses in order to initialize further strategy objects.
 	 */
 	protected void initStrategies(ApplicationContext context) {
+		// 初始化MultipartResolver
 		initMultipartResolver(context);
 		initLocaleResolver(context);
 		initThemeResolver(context);
+		// 初始化HanlderMapping
 		initHandlerMappings(context);
 		initHandlerAdapters(context);
 		initHandlerExceptionResolvers(context);
@@ -589,10 +591,14 @@ public class DispatcherServlet extends FrameworkServlet {
 	 * Initialize the HandlerMappings used by this class.
 	 * <p>If no HandlerMapping beans are defined in the BeanFactory for this namespace,
 	 * we default to BeanNameUrlHandlerMapping.
+	 * 客户端发出的request会被DispatcherServlet 提交给handlerMapping，
+	 * handlerMapping 根据配置将请求invoke 给对应的controller
+	 * 一般会有多组handlerMapping ，spring 会将bean排序，使用优先级更高的handlermapping 得到handler
 	 */
 	private void initHandlerMappings(ApplicationContext context) {
 		this.handlerMappings = null;
 
+		// 默认是查找所有的HandlerMapping
 		if (this.detectAllHandlerMappings) {
 			// Find all HandlerMappings in the ApplicationContext, including ancestor contexts.
 			Map<String, HandlerMapping> matchingBeans =
@@ -604,6 +610,14 @@ public class DispatcherServlet extends FrameworkServlet {
 			}
 		}
 		else {
+			/**
+			 * 如果servlet 初始化参数配置为如下：
+			 * <init-param>
+			 * 		<param-name>detectAllHandlerMappings</param-name>
+			 * 		<param-value>false</param-value>
+			 * </init-param>
+			 * 那么全局只有一个handlerMapping
+			 */
 			try {
 				HandlerMapping hm = context.getBean(HANDLER_MAPPING_BEAN_NAME, HandlerMapping.class);
 				this.handlerMappings = Collections.singletonList(hm);
@@ -613,6 +627,8 @@ public class DispatcherServlet extends FrameworkServlet {
 			}
 		}
 
+		// 确保一定有HandlerMapping.class 的bean,此处用来兜底。
+		// 如果前面没有拿到handlerMapping,那么会去DispatcherServlet.properties 拿到bean
 		// Ensure we have at least one HandlerMapping, by registering
 		// a default HandlerMapping if no other mappings are found.
 		if (this.handlerMappings == null) {
