@@ -37,4 +37,7 @@ rootProject.children.each {project ->
 	project.buildFileName = "${project.name}.gradle"
 }
 include 'windeaker-core-test'
+include 'windeaker-mvc-test'
+include 'windeaker-jdbc-tx-test'
+include 'windeaker-aop-test'
 
