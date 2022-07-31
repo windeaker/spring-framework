@@ -4,6 +4,23 @@
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<bean id="simpleBean" class="com.windeaker.core.simple.SimpleBean">
-		<property name="propertyB" value="this is property b"></property>
+		<property name="propertyB" value="this is property b"/>
 	</bean>
+
+	<bean id="car" class="com.windeaker.core.simple.CarFactoryBean">
+		<property name="carInfo" value="bmw,2000000"/>
+	</bean>
+
+	<bean id="circleRefBeanA" class="com.windeaker.core.simple.CircleRefBeanA">
+		<property name="refBeanB" ref="circleRefBeanB"/>
+	</bean>
+
+	<bean id="circleRefBeanB" class="com.windeaker.core.simple.CircleRefBeanB">
+		<property name="refBeanC" ref="circleRefBeanC"/>
+	</bean>
+
+	<bean id="circleRefBeanC" class="com.windeaker.core.simple.CircleRefBeanC">
+		<property name="refBeanA" ref="circleRefBeanA"/>
+	</bean>
+
 </beans>
